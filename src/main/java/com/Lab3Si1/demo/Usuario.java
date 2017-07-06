@@ -3,15 +3,45 @@ package com.Lab3Si1.demo;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.*;
+
+@Entity(name="Usuario")
+@Table(name="tb_usuario")
 public class Usuario {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long id;
+	
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public List<Serie> getSeries() {
+		return series;
+	}
+
+	public void setSeries(List<Serie> series) {
+		this.series = series;
+	}
+
+	@Column
 	private String nome;
-	private String ID;
+	@Column
+	private String email;
+	@Column
 	private String senha;
+	
+	@OneToMany
 	private List<Serie> series;
 	
-	public Usuario(String nome, String ID, String senha) {
+	public Usuario(String nome, String email, String senha) {
 		this.nome = nome;
-		this.ID = ID;
+		this.email = email;
 		this.senha = senha;
 		this.series = new ArrayList<>();
 	}
@@ -24,12 +54,12 @@ public class Usuario {
 		this.nome = nome;
 	}
 
-	public String getID() {
-		return ID;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setID(String iD) {
-		ID = iD;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getSenha() {
