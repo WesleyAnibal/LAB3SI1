@@ -4,27 +4,51 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 @Entity(name="Serie")
-@Table(name="tb_serie")
 public class Serie {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-	
+	public String getNotaIMDB() {
+		return notaIMDB;
+	}
+
+	public void setNotaIMDB(String notaIMDB) {
+		this.notaIMDB = notaIMDB;
+	}
+
+	public String getDescrição() {
+		return descrição;
+	}
+
+	public void setDescrição(String descrição) {
+		this.descrição = descrição;
+	}
+
+	public String getLinkImage() {
+		return linkImage;
+	}
+
+	public void setLinkImage(String linkImage) {
+		this.linkImage = linkImage;
+	}
+
 	@Column
 	private String nome;
-	
-	@OneToMany
+	@Column
+	private String notaIMDB;
+	@Column
+	private String descrição;
+	@Column
+	private String linkImage;
+	@ElementCollection
 	private List<Temporada> temporadas;
 	
 	public long getId() {

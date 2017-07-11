@@ -9,20 +9,19 @@ public class UsuarioService {
 	@Autowired
 	UsuarioRepository usuariorepositorio;
 	
-	public boolean cadastro(Usuario usuario) {
-		usuariorepositorio.save(usuario);
-		return true;
+	public Usuario cadastro(Usuario usuario) {
+		System.out.println(usuario.getNome());
+		return usuariorepositorio.save(usuario);
 	}
 	
-	public Usuario buscarUsuario(Usuario usuario){
-		Usuario usu = usuariorepositorio.findOne(usuario.getEmail());
+	public Usuario buscarUsuario(Long id){
+		Usuario usu = usuariorepositorio.findOne(id);
 		if(usu == null){
 			return null;
 		}
-		else if(usuario.getSenha().equals(usu.getSenha())){
+		else{
 			return usu;
 		}
-		return null;
 	}
 
 }

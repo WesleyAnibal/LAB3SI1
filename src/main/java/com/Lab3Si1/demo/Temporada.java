@@ -4,15 +4,14 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity(name="Temporada")
-@Table(name="tb_temporada")
 public class Temporada {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,6 +20,7 @@ public class Temporada {
 	@Column
 	private int num;
 	
+	@ElementCollection
 	private Set<Integer> eps;
 	
 	public long getId() {

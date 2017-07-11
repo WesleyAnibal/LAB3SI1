@@ -12,6 +12,25 @@ public class Usuario {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
+	@Column
+	private String nome;
+	@Column
+	private String email;
+	@Column
+	private String senha;
+	
+	@ElementCollection
+	private List<Serie> series;
+	
+	public Usuario() {}
+	
+	public Usuario(String nome, String email, String senha) {
+		this.nome = nome;
+		this.email = email;
+		this.senha = senha;
+		this.series = new ArrayList<>();
+	}
+	
 	
 	public long getId() {
 		return id;
@@ -29,22 +48,6 @@ public class Usuario {
 		this.series = series;
 	}
 
-	@Column
-	private String nome;
-	@Column
-	private String email;
-	@Column
-	private String senha;
-	
-	@OneToMany
-	private List<Serie> series;
-	
-	public Usuario(String nome, String email, String senha) {
-		this.nome = nome;
-		this.email = email;
-		this.senha = senha;
-		this.series = new ArrayList<>();
-	}
 
 	public String getNome() {
 		return nome;
