@@ -108,5 +108,11 @@ public class ControllerUsuario {
 		Usuario usu = clienteservice.buscarUsuario(id);
 		return new ResponseEntity<>(usu.getWatchList(), HttpStatus.ACCEPTED);
 	}
+	
+	@RequestMapping(value="/email", method=RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Usuario>> getEmails(@RequestBody Usuario user) {
+		List<Usuario> l = clienteservice.usuarioEmail(user.getEmail());
+		return new ResponseEntity<>(l, HttpStatus.ACCEPTED);
+	}
 
 }
