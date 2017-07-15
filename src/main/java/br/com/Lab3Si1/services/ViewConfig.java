@@ -1,4 +1,4 @@
-package com.Lab3Si1.demo;
+package br.com.Lab3Si1.services;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;

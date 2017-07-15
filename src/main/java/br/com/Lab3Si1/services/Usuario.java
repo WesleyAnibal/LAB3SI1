@@ -1,4 +1,4 @@
-package com.Lab3Si1.demo;
+package br.com.Lab3Si1.services;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,8 +18,8 @@ public class Usuario {
 	private String email;
 	@Column
 	private String senha;
-	
-	@ElementCollection
+	@OneToMany
+	//@ElementCollection
 	private List<Serie> series;
 	
 	public Usuario() {}
@@ -83,6 +83,9 @@ public class Usuario {
 	}
 	
 	public boolean adicionarSerie(Serie serie) {
+		if(this.series == null) {
+			this.series = new ArrayList<>();
+		}
 		if(!this.series.contains(serie)) {
 			return this.series.add(serie);
 		}

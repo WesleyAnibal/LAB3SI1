@@ -1,4 +1,4 @@
-package com.Lab3Si1.demo;
+package br.com.Lab3Si1.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +22,21 @@ public class UsuarioService {
 		else{
 			return usu;
 		}
+	}
+	
+public boolean remover(Long id) {
+		
+		if(usuariorepositorio.exists(id)) {
+			usuariorepositorio.delete(id);	
+			return true;
+		}
+		return false;
+		
+		
+	}
+	
+	public void salvarUsuario(Usuario usuario) {
+		usuariorepositorio.save(usuario);
 	}
 
 }

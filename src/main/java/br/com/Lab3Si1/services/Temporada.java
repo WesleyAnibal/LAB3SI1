@@ -1,4 +1,4 @@
-package com.Lab3Si1.demo;
+package br.com.Lab3Si1.services;
 
 import java.util.HashSet;
 import java.util.Set;
