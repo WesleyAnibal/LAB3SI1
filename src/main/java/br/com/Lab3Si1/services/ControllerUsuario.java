@@ -25,7 +25,6 @@ public class ControllerUsuario {
 
 		Usuario usu = clienteservice.buscarUsuario(id);
 		if (usu != null) {
-			System.out.println(usu.getSeries().toString());
 			return new ResponseEntity<>(usu, HttpStatus.ACCEPTED);
 		}
 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -48,8 +47,8 @@ public class ControllerUsuario {
 		return new ResponseEntity<>(clienteservice.cadastro(usuario), HttpStatus.OK);
 	}
 	
-	@RequestMapping(method=RequestMethod.DELETE, value="{id}/series/{i}")
-	public ResponseEntity<Serie> deletarSerie(@RequestBody Serie serie, @PathVariable Long id, @PathVariable Long i){
+	@RequestMapping(method=RequestMethod.DELETE, value="{id}/minhasseries/{i}")
+	public ResponseEntity<Serie> deleteMinhaSerie(@RequestBody Serie serie, @PathVariable Long id, @PathVariable Long i){
 		Usuario usu = clienteservice.buscarUsuario(id);
 		if(usu.removerSerie(i)) {
 			clienteservice.cadastro(usu);
@@ -60,15 +59,40 @@ public class ControllerUsuario {
 		}
 		
 	}
+	@RequestMapping(method=RequestMethod.DELETE, value="{id}/watchlist/{i}")
+	public ResponseEntity<Serie> deleteWatchList(@RequestBody Serie serie, @PathVariable Long id, @PathVariable Long i){
+		Usuario usu = clienteservice.buscarUsuario(id);
+		if(usu.removerWatch(i)) {
+			clienteservice.cadastro(usu);
+			return new ResponseEntity<Serie>(serie, HttpStatus.OK);
+		}
+		else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		
+	}
 
-	@RequestMapping(value = "/{id}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/{id}/watched", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Serie> adicionarSerie(@RequestBody Serie serie, @PathVariable("id") Long id) {
 		Usuario usu = clienteservice.buscarUsuario(id);
 		serieService.adicionarSerie(serie);
-		usu.adicionarSerie(serieService.buscarSerie(serie.getId()));
-		clienteservice.cadastro(usu);
-		System.out.println(usu.getSeries().toString());
-		return new ResponseEntity<Serie>(serie, HttpStatus.OK);
+		if(usu.adicionarSerie(serieService.buscarSerie(serie.getId()))) {
+			clienteservice.cadastro(usu);
+			return new ResponseEntity<Serie>(serie, HttpStatus.OK);
+		}
+		return new ResponseEntity<>(HttpStatus.CONFLICT);	
+	}
+	
+	@RequestMapping(value = "/{id}/watch", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Serie> adicionarSerieWatch(@RequestBody Serie serie, @PathVariable("id") Long id) {
+		Usuario usu = clienteservice.buscarUsuario(id);
+		serieService.adicionarSerie(serie);
+		if(usu.adicionarSerieWatch(serieService.buscarSerie(serie.getId()))) {
+			clienteservice.cadastro(usu);
+			return new ResponseEntity<Serie>(serie, HttpStatus.OK);
+		}
+		return new ResponseEntity<>(HttpStatus.CONFLICT);
+		
 	}
 
 }

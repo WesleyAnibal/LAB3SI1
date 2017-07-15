@@ -20,17 +20,35 @@ public class Usuario {
 	private String senha;
 	@OneToMany
 	//@ElementCollection
-	private List<Serie> series;
-	
+	private List<Serie> minhasSeries;
+	@OneToMany
+	//@ElementCollection
+	private List<Serie> watchList;
+
 	public Usuario() {}
 	
 	public Usuario(String nome, String email, String senha) {
 		this.nome = nome;
 		this.email = email;
 		this.senha = senha;
-		this.series = new ArrayList<>();
+		this.minhasSeries = new ArrayList<>();
 	}
 	
+	public List<Serie> getMinhasSeries() {
+		return minhasSeries;
+	}
+
+	public void setMinhasSeries(List<Serie> minhasSeries) {
+		this.minhasSeries = minhasSeries;
+	}
+
+	public List<Serie> getWatchList() {
+		return watchList;
+	}
+
+	public void setWatchList(List<Serie> watchList) {
+		this.watchList = watchList;
+	}
 	
 	public long getId() {
 		return id;
@@ -39,15 +57,6 @@ public class Usuario {
 	public void setId(long id) {
 		this.id = id;
 	}
-
-	public List<Serie> getSeries() {
-		return series;
-	}
-
-	public void setSeries(List<Serie> series) {
-		this.series = series;
-	}
-
 
 	public String getNome() {
 		return nome;
@@ -74,7 +83,7 @@ public class Usuario {
 	}
 	
 	public boolean adicionarEp(Serie serie, int ep, int temp) {
-		for (Serie serie2 : series) {
+		for (Serie serie2 : minhasSeries) {
 			if(serie2.equals(serie)) {
 				serie2.adicionarEP(temp, ep);
 				return true;
@@ -83,7 +92,7 @@ public class Usuario {
 	}
 	
 	private Serie buscarserie(Long id) {
-		for (Serie serie : series) {
+		for (Serie serie : minhasSeries) {
 			if(serie.getId()== id) {
 				return serie;
 			}
@@ -93,17 +102,35 @@ public class Usuario {
 	public boolean removerSerie(Long i) {
 		Serie serie = buscarserie(i);
 		if(serie!= null) {
-			return this.series.remove(serie);
+			return this.minhasSeries.remove(serie);
 		}
 		return false;
 	}
 	
-	public boolean adicionarSerie(Serie serie) {
-		if(this.series == null) {
-			this.series = new ArrayList<>();
+	public boolean removerWatch(Long i) {
+		Serie serie = buscarserie(i);
+		if(serie!= null) {
+			return this.watchList.remove(serie);
 		}
-		if(!this.series.contains(serie)) {
-			return this.series.add(serie);
+		return false;
+	}
+	
+	
+	public boolean adicionarSerie(Serie serie) {
+		if(this.minhasSeries == null) {
+			this.minhasSeries = new ArrayList<>();
+		}
+		if(!this.minhasSeries.contains(serie)) {
+			return this.minhasSeries.add(serie);
+		}
+		return false;
+	}
+	public boolean adicionarSerieWatch(Serie serie) {
+		if(this.watchList == null) {
+			this.watchList = new ArrayList<>();
+		}
+		if(!this.watchList.contains(serie)) {
+			return this.watchList.add(serie);
 		}
 		return false;
 	}
