@@ -19,4 +19,6 @@ public class SerieService {
 		Serie serie = this.serieRepository.findOne(id);
 		return serie;
 	}
+	
+	
 }

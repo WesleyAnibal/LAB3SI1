@@ -82,6 +82,22 @@ public class Usuario {
 		}return false;
 	}
 	
+	private Serie buscarserie(Long id) {
+		for (Serie serie : series) {
+			if(serie.getId()== id) {
+				return serie;
+			}
+		}return null;
+	}
+	
+	public boolean removerSerie(Long i) {
+		Serie serie = buscarserie(i);
+		if(serie!= null) {
+			return this.series.remove(serie);
+		}
+		return false;
+	}
+	
 	public boolean adicionarSerie(Serie serie) {
 		if(this.series == null) {
 			this.series = new ArrayList<>();

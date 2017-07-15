@@ -18,6 +18,37 @@ public class Serie {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
+		result = prime * result + ((temporadas == null) ? 0 : temporadas.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Serie other = (Serie) obj;
+		if (nome == null) {
+			if (other.nome != null)
+				return false;
+		} else if (!nome.equals(other.nome))
+			return false;
+		if (temporadas == null) {
+			if (other.temporadas != null)
+				return false;
+		} else if (!temporadas.equals(other.temporadas))
+			return false;
+		return true;
+	}
+
 	@Column
 	private String nome;
 	@Column

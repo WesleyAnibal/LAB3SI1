@@ -47,6 +47,19 @@ public class ControllerUsuario {
 		System.out.println(usuario.getId());
 		return new ResponseEntity<>(clienteservice.cadastro(usuario), HttpStatus.OK);
 	}
+	
+	@RequestMapping(method=RequestMethod.DELETE, value="{id}/series/{i}")
+	public ResponseEntity<Serie> deletarSerie(@RequestBody Serie serie, @PathVariable Long id, @PathVariable Long i){
+		Usuario usu = clienteservice.buscarUsuario(id);
+		if(usu.removerSerie(i)) {
+			clienteservice.cadastro(usu);
+			return new ResponseEntity<Serie>(serie, HttpStatus.OK);
+		}
+		else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		
+	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Serie> adicionarSerie(@RequestBody Serie serie, @PathVariable("id") Long id) {
