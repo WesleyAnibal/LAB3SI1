@@ -1,5 +1,7 @@
 package br.com.Lab3Si1.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -93,6 +95,18 @@ public class ControllerUsuario {
 		}
 		return new ResponseEntity<>(HttpStatus.CONFLICT);
 		
+	}
+	
+	@RequestMapping(value="/{id}/minhasseries", method= RequestMethod.GET)
+	public ResponseEntity<List<Serie>> getMinhasSeries(@PathVariable Long id){
+		Usuario usu = clienteservice.buscarUsuario(id);
+		return new ResponseEntity<>(usu.getMinhasSeries(), HttpStatus.ACCEPTED);
+	}
+	
+	@RequestMapping(value="/{id}/watchlist", method= RequestMethod.GET)
+	public ResponseEntity<List<Serie>> getWatchList(@PathVariable Long id){
+		Usuario usu = clienteservice.buscarUsuario(id);
+		return new ResponseEntity<>(usu.getWatchList(), HttpStatus.ACCEPTED);
 	}
 
 }
