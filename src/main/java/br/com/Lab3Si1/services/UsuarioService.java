@@ -48,15 +48,15 @@ public class UsuarioService {
 		usuariorepositorio.save(usuario);
 	}
 	
-	public List<Usuario> usuarioEmail(String email) {
-		String sql = "SELECT * FROM TB_USUARIO WHERE EMAIL = ?";
+	public List<Usuario> getUsuarioBy(String by,String search) {
+		String sql = "SELECT * FROM TB_USUARIO WHERE "+by+" = ?";
 		List<Usuario> usuarios = new ArrayList<>();
 		
 		try {
 			Connection connection = DriverManager.getConnection("jdbc:h2:file:~/h2/app_db", "sa", "");
 			
 			PreparedStatement stmt = connection.prepareStatement(sql);
-			stmt.setString(1, email);
+			stmt.setString(1, search);
 			
 			ResultSet executeQuery = stmt.executeQuery();
 			
@@ -64,6 +64,7 @@ public class UsuarioService {
 				Long id = executeQuery.getLong("ID");
 				String nome = executeQuery.getString("NOME");
 				String senha = executeQuery.getString("SENHA");
+				String email = executeQuery.getString("EMAIL");
 				Usuario u = new Usuario(nome, email, senha);
 				u.setId(id);
 				usuarios.add(u);

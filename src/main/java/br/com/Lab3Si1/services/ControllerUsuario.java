@@ -111,7 +111,13 @@ public class ControllerUsuario {
 	
 	@RequestMapping(value="/email", method=RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Usuario>> getEmails(@RequestBody Usuario user) {
-		List<Usuario> l = clienteservice.usuarioEmail(user.getEmail());
+		List<Usuario> l = clienteservice.getUsuarioBy("EMAIL",user.getEmail());
+		return new ResponseEntity<>(l, HttpStatus.ACCEPTED);
+	}
+	
+	@RequestMapping(value="/name", method=RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Usuario>> getNames(@RequestBody Usuario user) {
+		List<Usuario> l = clienteservice.getUsuarioBy("NOME",user.getNome());
 		return new ResponseEntity<>(l, HttpStatus.ACCEPTED);
 	}
 
