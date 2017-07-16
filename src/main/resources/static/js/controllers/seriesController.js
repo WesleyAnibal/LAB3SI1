@@ -3,6 +3,11 @@ angular.module("series").controller("seriesController",function($scope, $http, s
     $scope.showWatchList = [];
     $scope.showWatchedList = [];
 
+    $scope.showWatch = function(){
+      $scope.watchList = ServiceRest.getSeries();
+      $scope.showWatchList = listAPI.chunk($scope.watchList, 5);
+    }
+    
     $scope.getNome = function(nome){
       $scope.series = [];
         seriesAPI.getSeries(nome).then(function(promise){
@@ -17,7 +22,7 @@ angular.module("series").controller("seriesController",function($scope, $http, s
         });
     }
 
-    
+
 
     $scope.funcao1 = function(serie) {
       var x;
