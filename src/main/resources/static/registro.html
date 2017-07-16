@@ -27,7 +27,7 @@
 		<title>Admin</title>
 	</head>
 	<body ng-controller="usuarioController">
-		<div class="container">
+		<div class="container col-sm-5">
 			<div class="row main">
 				<div class="main-login main-center">
 				<h5>Registre-se</h5>
@@ -64,6 +64,38 @@
 
 						<div class="form-group ">
              				<button class="btn btn-primary btn-lg login-button" type="button" id="button" name="button" ng-click="cadastroUsuario(usuario)">Registrar</button>
+						</div>
+
+					</form>
+				</div>
+			</div>
+		</div>
+    <div class="container col-sm-5">
+			<div class="row main">
+				<div class="main-login main-center">
+				<h5>Login</h5>
+						<div class="form-group">
+							<label for="email" class="cols-sm-2 control-label">Seu Email</label>
+							<div class="cols-sm-10">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+									<input type="text" class="form-control" name="email" id="email" ng-model="usuario.email"  placeholder="Enter your Email"/>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="password" class="cols-sm-2 control-label">Senha</label>
+							<div class="cols-sm-10">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+									<input type="password" class="form-control" name="password" id="password" ng-model="usuario.senha" placeholder="Coloque sua senha"/>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group ">
+             				<button class="btn btn-primary btn-lg login-button" type="button" id="button" name="button" ng-click="cadastroUsuario(usuario)">Login</button>
 						</div>
 
 					</form>
