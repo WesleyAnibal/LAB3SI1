@@ -17,7 +17,7 @@ public class Serie {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
+	public long id;
 	@Override
 	public int hashCode() {
 		final int prime = 31;

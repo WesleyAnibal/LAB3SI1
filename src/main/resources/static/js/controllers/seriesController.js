@@ -1,4 +1,4 @@
-angular.module("series").controller("seriesController",function($scope, $http, seriesAPI, listAPI){
+angular.module("series").controller("seriesController",function($scope, $http, seriesAPI, listAPI, ServiceRest){
     $scope.series = [];
     $scope.showWatchList = [];
     $scope.showWatchedList = [];
@@ -16,6 +16,8 @@ angular.module("series").controller("seriesController",function($scope, $http, s
           console.log(error);
         });
     }
+
+    
 
     $scope.funcao1 = function(serie) {
       var x;
