@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +22,8 @@ public class ControllerUsuario {
 
 	@Autowired
 	SerieService serieService;
-
+	
+	@CrossOrigin
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Usuario> buscaUsuario(@PathVariable("id") Long id) {
 
@@ -31,7 +33,8 @@ public class ControllerUsuario {
 		}
 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
-
+	
+	@CrossOrigin
 	@RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
 	public ResponseEntity<Usuario> deletarCliente(@PathVariable Long id) {
 
@@ -42,13 +45,15 @@ public class ControllerUsuario {
 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
 	}
-
+	
+	@CrossOrigin
 	@RequestMapping(value="/cadastro" , method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Usuario> cadastrar(@RequestBody Usuario usuario) {
 		System.out.println(usuario.getId());
 		return new ResponseEntity<>(clienteservice.cadastro(usuario), HttpStatus.OK);
 	}
 	
+	@CrossOrigin
 	@RequestMapping(method=RequestMethod.DELETE, value="{id}/minhasseries/{i}")
 	public ResponseEntity<Serie> deleteMinhaSerie(@RequestBody Serie serie, @PathVariable Long id, @PathVariable Long i){
 		Usuario usu = clienteservice.buscarUsuario(id);
@@ -61,6 +66,8 @@ public class ControllerUsuario {
 		}
 		
 	}
+	
+	@CrossOrigin
 	@RequestMapping(method=RequestMethod.DELETE, value="{id}/watchlist/{i}")
 	public ResponseEntity<Serie> deleteWatchList(@RequestBody Serie serie, @PathVariable Long id, @PathVariable Long i){
 		Usuario usu = clienteservice.buscarUsuario(id);
@@ -74,6 +81,7 @@ public class ControllerUsuario {
 		
 	}
 
+	@CrossOrigin
 	@RequestMapping(value = "/{id}/watched", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Serie> adicionarSerie(@RequestBody Serie serie, @PathVariable("id") Long id) {
 		Usuario usu = clienteservice.buscarUsuario(id);
@@ -85,6 +93,7 @@ public class ControllerUsuario {
 		return new ResponseEntity<>(HttpStatus.CONFLICT);	
 	}
 	
+	@CrossOrigin
 	@RequestMapping(value = "/{id}/watch", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Serie> adicionarSerieWatch(@RequestBody Serie serie, @PathVariable("id") Long id) {
 		Usuario usu = clienteservice.buscarUsuario(id);
@@ -97,24 +106,28 @@ public class ControllerUsuario {
 		
 	}
 	
-	@RequestMapping(value="/{id}/minhasseries", method= RequestMethod.GET)
+	@CrossOrigin
+	@RequestMapping(value="/{id}/minhasseries", method=RequestMethod.GET)
 	public ResponseEntity<List<Serie>> getMinhasSeries(@PathVariable Long id){
 		Usuario usu = clienteservice.buscarUsuario(id);
 		return new ResponseEntity<>(usu.getMinhasSeries(), HttpStatus.ACCEPTED);
 	}
 	
-	@RequestMapping(value="/{id}/watchlist", method= RequestMethod.GET)
+	@CrossOrigin
+	@RequestMapping(value="/{id}/watchlist", method=RequestMethod.GET)
 	public ResponseEntity<List<Serie>> getWatchList(@PathVariable Long id){
 		Usuario usu = clienteservice.buscarUsuario(id);
 		return new ResponseEntity<>(usu.getWatchList(), HttpStatus.ACCEPTED);
 	}
 	
+	@CrossOrigin
 	@RequestMapping(value="/email", method=RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Usuario>> getEmails(@RequestBody Usuario user) {
 		List<Usuario> l = clienteservice.getUsuarioBy("EMAIL",user.getEmail());
 		return new ResponseEntity<>(l, HttpStatus.ACCEPTED);
 	}
 	
+	@CrossOrigin
 	@RequestMapping(value="/name", method=RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Usuario>> getNames(@RequestBody Usuario user) {
 		List<Usuario> l = clienteservice.getUsuarioBy("NOME",user.getNome());
