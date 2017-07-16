@@ -122,16 +122,22 @@ public class ControllerUsuario {
 	
 	@CrossOrigin
 	@RequestMapping(value="/email", method=RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Usuario>> getEmails(@RequestBody Usuario user) {
+	public ResponseEntity<Usuario> getEmails(@RequestBody Usuario user) {
 		List<Usuario> l = clienteservice.getUsuarioBy("EMAIL",user.getEmail());
-		return new ResponseEntity<>(l, HttpStatus.ACCEPTED);
+		if(l.isEmpty())
+			return new ResponseEntity<Usuario>(HttpStatus.NOT_FOUND);
+		Usuario usu = clienteservice.buscarUsuario(l.get(0).getId());
+		return new ResponseEntity<>(usu, HttpStatus.ACCEPTED);
 	}
 	
 	@CrossOrigin
 	@RequestMapping(value="/name", method=RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Usuario>> getNames(@RequestBody Usuario user) {
+	public ResponseEntity<Usuario> getNames(@RequestBody Usuario user) {
 		List<Usuario> l = clienteservice.getUsuarioBy("NOME",user.getNome());
-		return new ResponseEntity<>(l, HttpStatus.ACCEPTED);
+		if(l.isEmpty())
+			return new ResponseEntity<Usuario>(HttpStatus.NOT_FOUND);
+		Usuario usu = clienteservice.buscarUsuario(l.get(0).getId());
+		return new ResponseEntity<>(usu, HttpStatus.ACCEPTED);
 	}
 
 }
