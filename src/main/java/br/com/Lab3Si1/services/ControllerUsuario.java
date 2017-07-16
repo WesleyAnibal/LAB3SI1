@@ -24,12 +24,15 @@ public class ControllerUsuario {
 	SerieService serieService;
 	
 	@CrossOrigin
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Usuario> buscaUsuario(@PathVariable("id") Long id) {
-
-		Usuario usu = clienteservice.buscarUsuario(id);
+	@RequestMapping(value="/busca",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Usuario> buscaUsuario(@RequestBody Usuario usuario) {
+		
+		Usuario usu = this.getEmails(usuario);
 		if (usu != null) {
-			return new ResponseEntity<>(usu, HttpStatus.ACCEPTED);
+			if(usuario.getSenha().equals(usu.getSenha()))
+				return new ResponseEntity<>(usu, HttpStatus.ACCEPTED);
+			else
+				return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 		}
 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
@@ -124,12 +127,12 @@ public class ControllerUsuario {
 	
 	@CrossOrigin
 	@RequestMapping(value="/email", method=RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Usuario> getEmails(@RequestBody Usuario user) {
+	public Usuario getEmails(@RequestBody Usuario user) {
 		List<Usuario> l = clienteservice.getUsuarioBy("EMAIL",user.getEmail());
 		if(l.isEmpty())
-			return new ResponseEntity<Usuario>(HttpStatus.NOT_FOUND);
+			return null;
 		Usuario usu = clienteservice.buscarUsuario(l.get(0).getId());
-		return new ResponseEntity<>(usu, HttpStatus.ACCEPTED);
+		return usu;
 	}
 	
 	@CrossOrigin
