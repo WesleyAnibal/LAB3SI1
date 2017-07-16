@@ -1,7 +1,7 @@
-angular.module("series").controller("usuarioController",['$scope','$http', 'ServiceRest',usuarioController]);
+angular.module("series").controller("usuarioController",['$scope','$rootScope','$http', 'ServiceRest',usuarioController]);
 
 
-function usuarioController($scope, $http, ServiceRest){
+function usuarioController($scope, $http, ServiceRest,$rootScope){
 	$scope.user = [];
 	$scope.cadastroUsuario = function(usuario) {
 		promise = ServiceRest.usuarioRegistro(usuario);
@@ -14,6 +14,7 @@ function usuarioController($scope, $http, ServiceRest){
 	$scope.getUser = function(usuario){
 		promise = ServiceRest.getUser(usuario);
 		promise.then(function(as){
+			$rootScope.watchList = as.minhasSeries;
 			return as.data;
 		});
 	}
