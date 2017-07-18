@@ -1,0 +1,41 @@
+<div id="home" class="tab-pane fade col-sm-6">
+            <h1>Séries Assistidas</h1>
+            <!--caso já tenha adicionado alguma série-->
+            <div ng-if="watchList.length > 0">
+              <div ng-repeat="row in showWatchList" ng-init="parent=$index">
+                <div ng-repeat="promise in row" ng-init="childrem=$index">
+                  <div ng-if="promise.Poster != 'N/A'">
+                    <img class="thumbnail grow" src="{{promise.Poster}}" width="150px"  align="top-left" height="150px" data-toggle="modal" data-target="#faModal{{childrem + 5 * parent}}"></img>
+                  </div>
+                  <!--série sem imagem-->
+                  <div ng-if="promise.Poster == 'N/A'">
+                    <img class="thumbnail grow" src="noimage.jpg" width="150px" height="150px" align="top-left"  data-toggle="modal" data-target="#faModal{{childrem + 5 * parent}}"></img>
+                  </div>
+                  <!--Ao clicar na imagem, abre o modal da série, com a opção de enviar para a watchedList-->
+                  <div id="faModal{{childrem + 5 * parent}}" class="modal fade">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h2 class="modal-title">{{promise.Title}}</h4>
+                          <img class="image" align="top-right" src="{{promise.Poster}}"></img>
+                          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                          <p ng-bind="promise.Plot"></p>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-primary" ng-click="assistidos(promise.imdbID)">Adicionar ao seu perfil</button>
+                          <button type="button" class="btn btn-danger" style="vertical-align:middle" data-dismiss="modal" ng-click="alteraValor()">Fechar</button>
+                          <button type="button" class="btn btn-danger" ng-click="funcao2(promise)" data-dismiss="modal">Deletar Série</button>
+                          <div class="modal-dialog" align="center" ng-if="!adicionou">
+                            <span>Série já adicionada</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+            </div>
+          </div>
+            <h3 ng-if="watchList.length == 0"> Você ainda não adicionou nenhuma série! :) </h3>
+        </div>

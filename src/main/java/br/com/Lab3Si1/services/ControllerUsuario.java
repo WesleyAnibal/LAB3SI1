@@ -53,7 +53,7 @@ public class ControllerUsuario {
 	@RequestMapping(value="/cadastro" , method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Usuario> cadastrar(@RequestBody Usuario usuario) {
 		System.out.println(usuario.getId());
-		if(!this.getEmails(usuario).equals(new ResponseEntity<Usuario>(HttpStatus.NOT_FOUND)))
+		if(this.getEmails(usuario) != null)
 			return new ResponseEntity<Usuario>(HttpStatus.CONFLICT);
 		return new ResponseEntity<>(clienteservice.cadastro(usuario), HttpStatus.OK);
 	}

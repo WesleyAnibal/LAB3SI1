@@ -1,10 +1,11 @@
 angular.module("series").controller("usuarioController",['$scope','$rootScope','$http', 'ServiceRest',usuarioController]);
 
 
-function usuarioController($scope, $http, ServiceRest,$rootScope){
+function usuarioController($scope,$rootScope, $http, ServiceRest ){
 	$scope.user = [];
 	$scope.cadastroUsuario = function(usuario) {
 		promise = ServiceRest.usuarioRegistro(usuario);
+		alert(usuario);
 		promise.then(function(as){
 			$scope.user = as.data;
 		});

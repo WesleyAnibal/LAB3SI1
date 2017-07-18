@@ -1,0 +1,51 @@
+ <div id="home" class="tab-pane fade in active col-sm-9;">
+          <h1>Pesquisar</h1>
+          <input class="form-control" type="text" ng-model="nome"  placeholder="digite o nome da serie" style="width:300px" />
+          <button class="btn btn-primary" ng-click="getNome(nome)">Pesquisar</button>
+          <h3></h3>
+                <div ng-if="series.length > 0">
+                    <div ng-repeat="promise in series" ng-init="parentIndex=$index">
+                      <div ng-repeat="x in promise">
+                        <!--caso tenha encontrado alguma série com nome relacionado-->
+                        <div ng-if="x != 'N/A'" ng-init="childremIndex=$parent.$index">
+                          <div ng-if="x.Poster != 'N/A'" >
+                            <img class="thumbnail grow serie" align="top-left" src="{{x.Poster}}" data-toggle="modal" data-target="#myModal{{childremIndex + 5 * parentIndex}}"></img>
+                          </div>
+                          <div ng-if="x.Poster == 'N/A'">
+                            <img class="thumbnail grow serie" align="top-left" src="noimage.jpg" data-toggle="modal" data-target="#myModal{{childremIndex + 5 * parentIndex}}"></img>
+                          </div>
+                          <!--abrir o modal e exibir a opções.-->
+                          <div id="myModal{{childremIndex + 5 * parentIndex}}" class="modal fade">
+                            <div class="modal-dialog">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h4 style="margin-left: 220px"class="modal-title">{{x.Title}}</h4>
+                                  <div ng-if="x.Poster != 'N/A'" >
+                                    <img style="margin-left: 150px" class="image" src="{{x.Poster}}"></img>
+                                  </div>
+                                  <div ng-if="x.Poster == 'N/A'">
+                                    <img style="margin-left: 150px" class="image" src="noimage.jpg"></img>
+                                  </div>
+                                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+                                <!--opções de adicionar na watch, na watched ou fechar o modal.-->
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-Success" style="vertical-align:middle" name="button" ng-click="assistidos(x.imdbID)">Adicionar as minhas séries</button>
+                                  <button type="button" class="btn btn-Success" style="vertical-align:middle" name="button" ng-click="queroAssistir(x.imdbID)">Adicionar a WatchList</button>
+                                  <button type="button" class="btn btn-danger" style="vertical-align:middle" data-dismiss="modal" ng-click="alteraValor()">Fechar</button>
+                                  <div class="modal-dialog" align="center" ng-if="!adicionou">
+                                    <span>Série já adicionada</span>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <!--caso não tenha econtrado nenhuma série relacionada-->
+                        <div ng-if="x == 'N/A'">
+                          <h3>Serie não encontrada :(</h3>
+                        </div>
+                      </div>
+                    </div>
+              </div>
+        </div>

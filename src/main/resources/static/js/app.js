@@ -1,1 +1,1 @@
-angular.module("series", []);
+angular.module("series", ["ui.router"]);

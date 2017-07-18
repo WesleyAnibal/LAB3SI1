@@ -1,4 +1,4 @@
-angular.module("series").controller("seriesController",function($scope, $http, seriesAPI, listAPI, ServiceRest, $rootScope){
+angular.module("series").controller("seriesController",function($scope,$state, $http, seriesAPI, listAPI, ServiceRest, $rootScope){
     $scope.series = [];
     $scope.showWatchList = [];
     $scope.showWatchedList = [];
@@ -7,6 +7,17 @@ angular.module("series").controller("seriesController",function($scope, $http, s
       $scope.watchList = ServiceRest.getSeries();
       console.log($rootScope.watchList);
       $scope.showWatchList = listAPI.chunk($scope.watchList, 5);
+    }
+    
+    $scope.searchTo = function(){
+    	$state.transitionTo("series.pesquisa");
+    }
+    $scope.minhasSeries = function(){
+    	$state.transitionTo("series.minhasseries");
+    }
+    
+    $scope.queroSeries = function(){
+    	$state.transitionTo("series.queroassistir");
     }
 
     $scope.getNome = function(nome){

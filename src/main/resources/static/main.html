@@ -1,0 +1,17 @@
+<body>
+    <!--controle de abas, entre a home que contém a pesquisa, as séries que quero assistir e as que estou assistindo-->
+    <div class="col-md-3" style="background-color: #212121; height: 100%; position: fixed; width: 20%">
+      <ul class="nav nav-pills nav-stacked" style="margin-top: 10%">
+        <li class="active"><a data-toggle="pill" ng-click="searchTo()" href="">Pesquisar</a></li>
+        <li><a data-toggle="pill"  ng-click="queroSeries()" href="">Quero assistir</a></li>
+        <li><a data-toggle="pill"  ng-click="minhasSeries()" href="">Minhas Séries</a></li>
+      </ul>
+    </div>
+    <!--valores de cada aba-->
+    <div class="tab-content col-md-9" style="position: relative; width: 80%; margin-left: 20%">
+      <!--pesquisa de filmes-->
+        <div ui-view></div>
+        <!--Exibir as séries da watchList-->
+        <!--Exibir as séries que está assistindo-->
+      </div>
+  </body>

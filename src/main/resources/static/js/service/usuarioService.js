@@ -1,5 +1,4 @@
-angular.module("series").service("ServiceRest" ,function($http){
-	var usuario = {};
+angular.module("series").service("ServiceRest" , function($http){
 	var _usuarioRegistro = function(usuario){
 		var promise = $http.post("http://localhost:8080/api/cadastro",usuario);
 		return promise;
@@ -7,7 +6,7 @@ angular.module("series").service("ServiceRest" ,function($http){
 
 	var _getUser = function(user){
 		var promise = $http.get("http://localhost:8080/api/busca", user);
-		usuario = promise;
+		console.log(promise);
 		return promise;
 	}
 
@@ -17,9 +16,8 @@ angular.module("series").service("ServiceRest" ,function($http){
 	}
 
 	return {
-		usuarioRegistro: _usuarioRegistro,
-		getUser: _getUser
-      };
+		usuarioRegistro: _usuarioRegistro
+	};
 
 
 });
