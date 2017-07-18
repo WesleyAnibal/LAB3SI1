@@ -8,11 +8,11 @@ angular.module("series").config(function($stateProvider, $urlRouterProvider){
       controller: "seriesController",
       templateUrl: "/main.html"
     }).state("series.queroassistir", {
-    	templateUrl: "/queroassistir.html"
+    	templateUrl: "/z.html"
     }).state("series.pesquisa", {
     	templateUrl: "/pesquisa.html"
     }).state("series.minhasseries",{
-    	templateUrl: "/minhasserie.html"
+    	templateUrl: "/k.html"
     })
     
     $urlRouterProvider.otherwise("/");
