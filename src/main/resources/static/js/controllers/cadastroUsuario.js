@@ -2,7 +2,7 @@ angular.module("series").controller("usuarioController",['$scope','$rootScope','
 
 
 function usuarioController($scope,$rootScope, $http, ServiceRest ){
-	$scope.user = [];
+	$scope.user = {};
 	$scope.cadastroUsuario = function(usuario) {
 		promise = ServiceRest.usuarioRegistro(usuario);
 		alert(usuario);
@@ -13,9 +13,10 @@ function usuarioController($scope,$rootScope, $http, ServiceRest ){
 
 	};
 	$scope.getUser = function(usuario){
-		promise = ServiceRest.getUser(usuario);
+		var promise = ServiceRest.getUser(usuario);
 		promise.then(function(as){
-			$rootScope.watchList = as.minhasSeries;
+			console.log(as.data);
+			$scope.user = as.data;
 			return as.data;
 		});
 	}

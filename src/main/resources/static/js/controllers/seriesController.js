@@ -1,11 +1,13 @@
 angular.module("series").controller("seriesController",function($scope,$state, $http, seriesAPI, listAPI, ServiceRest, $rootScope){
-    $scope.series = [];
+    $scope.series = []; 
+    $scope.watchedList = ServiceRest.getUser().minhasSeries;
+    $scope.watchList = ServiceRest.getUser().watchList;
     $scope.showWatchList = [];
     $scope.showWatchedList = [];
 
     $scope.showWatch = function(){
-      $scope.watchList = ServiceRest.getSeries();
-      console.log($rootScope.watchList);
+      $scope.watchList = ServiceRest.getUser().watchList;
+      console.log($scope.watchList);
       $scope.showWatchList = listAPI.chunk($scope.watchList, 5);
     }
     
@@ -116,7 +118,7 @@ angular.module("series").controller("seriesController",function($scope,$state, $
       serie.nota = nota;
     }
 
-    $rootScope.watchList = [];
+   
     $scope.adicionou = true;
     $scope.queroAssistir = function(id){
       $scope.adicionou = true;
@@ -144,7 +146,6 @@ angular.module("series").controller("seriesController",function($scope,$state, $
       popup.classList.toggle("show");
     }
 
-    $scope.watchedList = [];
     $scope.assistidos = function(filme){
       $scope.adicionou = true;
       var filme = seriesAPI.getSerie(filme).then(function(resolve){
@@ -153,6 +154,7 @@ angular.module("series").controller("seriesController",function($scope,$state, $
             resolve.data.Poster = 'noimage.jpg';
           }
           listAPI.adicionaWL($scope.serieTemp(resolve.data), $scope.watchedList);
+          ServiceRest.addMinhasSeries($scope.serieTemp(resolve.data));
           $scope.showWatchedList = listAPI.chunk($scope.watchedList, 5);
           $scope.adicionou = true;
         }else{

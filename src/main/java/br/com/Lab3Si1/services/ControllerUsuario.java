@@ -24,13 +24,15 @@ public class ControllerUsuario {
 	SerieService serieService;
 	
 	@CrossOrigin
-	@RequestMapping(value="/busca",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="/busca",method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Usuario> buscaUsuario(@RequestBody Usuario usuario) {
 		
 		Usuario usu = this.getEmails(usuario);
 		if (usu != null) {
-			if(usuario.getSenha().equals(usu.getSenha()))
-				return new ResponseEntity<>(usu, HttpStatus.ACCEPTED);
+			if(usuario.getSenha().equals(usu.getSenha())) {
+				System.out.println(usu);
+				return new ResponseEntity<>(usu, HttpStatus.OK);
+			}
 			else
 				return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 		}
@@ -87,7 +89,7 @@ public class ControllerUsuario {
 	}
 
 	@CrossOrigin
-	@RequestMapping(value = "/{id}/watched", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/{id}/watched", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Serie> adicionarSerie(@RequestBody Serie serie, @PathVariable("id") Long id) {
 		Usuario usu = clienteservice.buscarUsuario(id);
 		serieService.adicionarSerie(serie);
