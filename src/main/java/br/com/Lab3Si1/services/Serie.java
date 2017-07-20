@@ -85,6 +85,7 @@ public class Serie {
 	public Serie(String nome, String numeroTemps) {
 		this.nome = nome;
 		this.temporadas = numeroTemps;
+		this.notaUsuario = "0.0";
 	}
 
 	public String getLinkImage() {

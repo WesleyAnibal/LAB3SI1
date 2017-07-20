@@ -2,6 +2,7 @@ package br.com.Lab3Si1.services;
 
 import java.util.List;
 
+import org.eclipse.jetty.client.ResponseNotifier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -62,8 +63,9 @@ public class ControllerUsuario {
 	
 	@CrossOrigin
 	@RequestMapping(method=RequestMethod.DELETE, value="{id}/minhasseries/{i}")
-	public ResponseEntity<Serie> deleteMinhaSerie(@RequestBody Serie serie, @PathVariable Long id, @PathVariable Long i){
+	public ResponseEntity<Serie> deleteMinhaSerie(@PathVariable Long id, @PathVariable Long i){
 		Usuario usu = clienteservice.buscarUsuario(id);
+		Serie serie = serieService.buscarSerie(i);
 		if(usu.removerSerie(i)) {
 			clienteservice.cadastro(usu);
 			return new ResponseEntity<Serie>(serie, HttpStatus.OK);
@@ -98,6 +100,15 @@ public class ControllerUsuario {
 			return new ResponseEntity<Serie>(serie, HttpStatus.OK);
 		}
 		return new ResponseEntity<>(HttpStatus.CONFLICT);	
+	}
+	
+	@CrossOrigin
+	@RequestMapping(method=RequestMethod.PUT, value="{id}/minhasseries/{i}")
+	public ResponseEntity adicionarNota(@PathVariable("id") Long id, @PathVariable("i") Long i , @RequestBody String nota){
+		Usuario usu = clienteservice.buscarUsuario(id);
+		usu.adicionarNota(i, nota);
+		clienteservice.cadastro(usu);
+		return new ResponseEntity(HttpStatus.ACCEPTED);
 	}
 	
 	@CrossOrigin

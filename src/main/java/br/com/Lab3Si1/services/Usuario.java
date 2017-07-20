@@ -91,6 +91,11 @@ public class Usuario {
 		}return false;
 	}
 	
+	public void adicionarNota(Long id, String nota) {
+		Serie serie = this.buscarserie(id);
+		serie.setNotaUsuario(nota);
+	}
+	
 	private Serie buscarserie(Long id) {
 		for (Serie serie : minhasSeries) {
 			if(serie.getId()== id) {

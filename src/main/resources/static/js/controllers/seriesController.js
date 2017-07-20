@@ -71,6 +71,7 @@ angular.module("series").controller("seriesController",function($scope,ServiceRe
     $scope.removeSerieWatched = function(serie){
       var posicao = $scope.watchedList.indexOf(serie);
       $scope.watchedList.splice(posicao,1);
+      ServiceRest.removeWatched($scope.usuario.id, serie.id);
       $scope.showWatchedList = listAPI.chunk($scope.watchedList, 5);
     }
     $scope.removeSerieWatch = function(serie){
@@ -109,14 +110,15 @@ angular.module("series").controller("seriesController",function($scope,ServiceRe
           temporadas.push(temp);
         }
         serie.temporadas = temporadas;
-        serie.nota = "0.0";
+        serie.notaUsuario = "0.0";
         console.log(serie);
         return serie;
     };
 
     $scope.adicionarNota = function(serie, nota){
-      serie.nota = nota;
-    }
+      ServiceRest.addNota($scope.usuario.id, serie.id, nota);
+      serie.notaUsuario = nota;
+    };
 
    
     $scope.adicionou = true;
