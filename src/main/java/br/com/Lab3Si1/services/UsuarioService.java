@@ -53,7 +53,7 @@ public class UsuarioService {
 		List<Usuario> usuarios = new ArrayList<>();
 		
 		try {
-			Connection connection = DriverManager.getConnection("jdbc:h2:file:~/h2/app", "sa", "");
+			Connection connection = DriverManager.getConnection("jdbc:h2:file:~/h2/app_db", "sa", "");
 			
 			PreparedStatement stmt = connection.prepareStatement(sql);
 			stmt.setString(1, search);

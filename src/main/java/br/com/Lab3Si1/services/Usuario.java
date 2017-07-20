@@ -85,7 +85,7 @@ public class Usuario {
 	public boolean adicionarEp(Serie serie, int ep, int temp) {
 		for (Serie serie2 : minhasSeries) {
 			if(serie2.equals(serie)) {
-				serie2.adicionarEP(temp, ep);
+				//serie2.adicionarEP(temp, ep);
 				return true;
 			}
 		}return false;
@@ -133,5 +133,9 @@ public class Usuario {
 			return this.watchList.add(serie);
 		}
 		return false;
+	}
+	
+	public String toString() {
+		return this.nome;
 	}
 }

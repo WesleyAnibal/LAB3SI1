@@ -1,22 +1,27 @@
-angular.module("series").controller("usuarioController",['$scope','$rootScope','$http', 'ServiceRest',usuarioController]);
+angular.module("series").controller("usuarioController",['$scope','ServiceRest','$rootScope','$http',usuarioController]);
 
 
-function usuarioController($scope,$rootScope, $http, ServiceRest ){
-	$scope.user = {};
+function usuarioController($scope, ServiceRest, $rootScope, $http ){
+	$scope.userk = {};
 	$scope.cadastroUsuario = function(usuario) {
 		promise = ServiceRest.usuarioRegistro(usuario);
-		alert(usuario);
 		promise.then(function(as){
-			$scope.user = as.data;
+			$scope.userk = as.data;
+			return as.data;
 		});
 
 
 	};
-	$scope.getUser = function(usuario){
-		var promise = ServiceRest.getUser(usuario);
+	$scope.getUser = function(email, senha){
+		console.log(email);
+		var usera = {
+				"senha" : senha,
+				"email" : email,
+				"nome" : null
+		}
+		var promise = ServiceRest.getUser(usera);
 		promise.then(function(as){
-			console.log(as.data);
-			$scope.user = as.data;
+			$scope.userk = as.data;
 			return as.data;
 		});
 	}

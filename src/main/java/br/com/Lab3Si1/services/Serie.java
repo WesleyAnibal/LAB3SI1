@@ -4,15 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 @Entity(name="Serie")
-//@Table(name="tb_serie")
+@Table(name="tb_serie")
 public class Serie {
 
 	@Id
@@ -23,7 +24,7 @@ public class Serie {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
-		result = prime * result + ((temporadas == null) ? 0 : temporadas.hashCode());
+		//result = prime * result + ((temporadas == null) ? 0 : temporadas.hashCode());
 		return result;
 	}
 
@@ -41,26 +42,33 @@ public class Serie {
 				return false;
 		} else if (!nome.equals(other.nome))
 			return false;
-		if (temporadas == null) {
-			if (other.temporadas != null)
-				return false;
-		} else if (!temporadas.equals(other.temporadas))
-			return false;
 		return true;
 	}
 
 	@Column
+	@JsonProperty(value="Title")
 	private String nome;
-	@Column
-	private String notaIMDB;
 	@Column
 	private String notaUsuario;
 	@Column
+	@JsonProperty(value="Plot")
 	private String descricao;
 	@Column
+	@JsonProperty(value="Poster")
 	private String linkImage;
 	@Column
 	private String imdbRating;
+	@Column
+	@JsonProperty(value="Rated")
+	private String rated;
+	public String getRated() {
+		return rated;
+	}
+
+	public void setRated(String rated) {
+		this.rated = rated;
+	}
+
 	public String getImdbRating() {
 		return imdbRating;
 	}
@@ -68,24 +76,15 @@ public class Serie {
 	public void setImdbRating(String imdbRating) {
 		this.imdbRating = imdbRating;
 	}
-
-	@ElementCollection
-	private List<Temporada> temporadas;
+	@Column
+	@JsonProperty(value="totalSeasons")
+	private String temporadas;
 
 	public Serie() {}
 
-	public Serie(String nome, int numeroTemps) {
+	public Serie(String nome, String numeroTemps) {
 		this.nome = nome;
-		this.temporadas = new ArrayList<>();
-		adicionaTemps(numeroTemps);
-	}
-
-	public String getNotaIMDB() {
-		return notaIMDB;
-	}
-
-	public void setNotaIMDB(String notaIMDB) {
-		this.notaIMDB = notaIMDB;
+		this.temporadas = numeroTemps;
 	}
 
 	public String getLinkImage() {
@@ -112,11 +111,11 @@ public class Serie {
 		this.nome = nome;
 	}
 
-	public List<Temporada> getTemporadas() {
+	public String getTemporadas() {
 		return temporadas;
 	}
 
-	public void setTemporadas(List<Temporada> temporadas) {
+	public void setTemporadas(String temporadas) {
 		this.temporadas = temporadas;
 	}
 	public String getNotaUsuario() {
@@ -135,17 +134,4 @@ public class Serie {
 		this.descricao = descricao;
 	}
 
-	public void adicionarEP(int temp, int ep) {
-		for (Temporada temporada : temporadas) {
-			if (temporada.getNum() == temp) {
-				temporada.adicionarEp(ep);
-			}
-		}
-	}
-
-	private void adicionaTemps(int num) {
-		for (int i = 1; i <= num; i++) {
-			this.temporadas.add(new Temporada(i));
-		}
-	}
 }

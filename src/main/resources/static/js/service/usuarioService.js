@@ -5,27 +5,41 @@ angular.module("series").service("ServiceRest" , function($http,$state){
 	var _usuarioRegistro = function(usuario){
 		var promise = $http.post("http://localhost:8080/api/cadastro",usuario);
 		promise.then(function(as){
-			this.user = promise.data;
-			$state.transitionTo("series");
-		});
-		return promise;
-	}
-
-	var _getUser = function(user){
-		var promise = $http.post("http://localhost:8080/api/busca", user);
-		promise.then(function(as){
 			this.user = as.data;
 			$state.transitionTo("series");
 		});
 		return promise;
 	}
+
+	var _getUser = function(usera){
+		console.log(usera);
+		user = {};
+		var promise = $http.post("http://localhost:8080/api/busca", usera);
+		promise.then(function(as){
+			this.user = as.data;
+			$state.transitionTo("series");
+			console.log(_getUseri());
+		});
+		return promise;
+	}
 	
-	var _adicionarMinhasSeries = function(serie){
-		var promise = $http.put("http://localhost:8080/api/"+this.user.id+"/minhasseries",serie);
+	var _adicionarMinhasSeries = function(serie, id){
+		var promise = $http.post("http://localhost:8080/api/"+id+"/watched",serie);
 		promise.then(function(as){
 			this.user.minhasSeries.add(as.data);
 		});
 		
+	}
+	
+	var _adicionarWatchList = function(serie, id){
+		var promise = $http.post("http://localhost:8080/api/"+id+"/watch",serie);
+		promise.then(function(as){
+			this.user.watchList.add(as.data);
+		});
+		
+	}
+	var _getMinhasSeries = function(){
+		return this.user.minhasSeries;
 	}
 
 	var _getSeries = function(){
@@ -45,7 +59,9 @@ angular.module("series").service("ServiceRest" , function($http,$state){
 		setUser : _setUser,
 		getUser: _getUser,
 		getUseri :  _getUseri,
-		addMinhasSeries : _adicionarMinhasSeries
+		addMinhasSeries : _adicionarMinhasSeries,
+		getMinhasSeries : _getMinhasSeries,
+		addWatchList : _adicionarWatchList
 	};
 
 

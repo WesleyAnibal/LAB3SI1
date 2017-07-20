@@ -65,7 +65,7 @@
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
-									<input type="text" class="form-control" name="email" id="email" ng-model="user.email"  placeholder="Enter your Email"/>
+									<input type="text" class="form-control" name="email" id="email" ng-model="email"  placeholder="Enter your Email"/>
 								</div>
 							</div>
 						</div>
@@ -75,13 +75,13 @@
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-									<input type="password" class="form-control" name="password" id="password" ng-model="user.senha" placeholder="Coloque sua senha"/>
+									<input type="password" class="form-control" name="password" id="password" ng-model="senha" placeholder="Coloque sua senha"/>
 								</div>
 							</div>
 						</div>
 
 						<div class="form-group">
-             				<button class="btn btn-primary btn-lg login-button" type="button" id="button" name="button" ng-click="getUser(user)">Login</button>
+             				<button class="btn btn-primary btn-lg login-button" type="button" id="button" name="button" ng-click="getUser(email,senha)">Login</button>
 						</div>
 
 					</form>

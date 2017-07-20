@@ -1,9 +1,10 @@
-angular.module("series").controller("seriesController",function($scope,$state, $http, seriesAPI, listAPI, ServiceRest, $rootScope){
+angular.module("series").controller("seriesController",function($scope,ServiceRest,$state, $http, seriesAPI, listAPI, $rootScope){
     $scope.series = []; 
-    $scope.watchedList = ServiceRest.getUser().minhasSeries;
-    $scope.watchList = ServiceRest.getUser().watchList;
-    $scope.showWatchList = [];
-    $scope.showWatchedList = [];
+    $scope.usuario = $scope.userk;
+    $scope.watchedList = $scope.usuario.minhasSeries == null ? [] : $scope.usuario.minhasSeries;
+    $scope.watchList = $scope.usuario.watchList == null ? [] : $scope.usuario.watchList;
+    $scope.showWatchList = $scope.watchList == null ? [] :listAPI.chunk($scope.watchList, 5);
+    $scope.showWatchedList = $scope.watchedList == null ? [] :listAPI.chunk($scope.watchedList, 5);
 
     $scope.showWatch = function(){
       $scope.watchList = ServiceRest.getUser().watchList;
@@ -37,7 +38,6 @@ angular.module("series").controller("seriesController",function($scope,$state, $
     }
 
 
-
     $scope.funcao1 = function(serie) {
       var x;
       var r=confirm("Deseja realmente apagar a série?");
@@ -60,9 +60,9 @@ angular.module("series").controller("seriesController",function($scope,$state, $
       }return nota;
     }
 
-    function contains(serie, lista) {
-        for (var i = 0; i < lista.length; i++) {
-          if(lista[i].imdbID == serie.imdbID){
+    $scope.contains = function(serie, lis) {
+        for (var i = 0; i < lis.length; i++) {
+          if(lis[i].imdbID == serie.imdbID){
             return true;
           }
         }return false;
@@ -123,12 +123,13 @@ angular.module("series").controller("seriesController",function($scope,$state, $
     $scope.queroAssistir = function(id){
       $scope.adicionou = true;
       var filme = seriesAPI.getSerie(id).then(function(resolve){
-        if(!contains(resolve.data,$rootScope.watchList)){
+        if(!$scope.contains(resolve.data,$scope.watchList)){
           if(resolve.data.Poster == 'N/A'){
             resolve.data.Poster = 'noimage.jpg';
           }
           listAPI.adicionaWL(resolve.data, $scope.watchList);
-          $scope.showWatchList = listAPI.chunk($rootScope.watchList, 5);
+          ServiceRest.addWatchList($scope.serieTemp(resolve.data), $scope.usuario.id);
+          $scope.showWatchList = listAPI.chunk($scope.watchList, 5);
           $scope.adicionou = true;
         }else{
           $scope.adicionou = false;
@@ -149,12 +150,12 @@ angular.module("series").controller("seriesController",function($scope,$state, $
     $scope.assistidos = function(filme){
       $scope.adicionou = true;
       var filme = seriesAPI.getSerie(filme).then(function(resolve){
-        if(!contains(resolve.data, $scope.watchedList)){
+        if(!$scope.contains(resolve.data, $scope.usuario.minhasSeries)){
           if(resolve.data.Poster == 'N/A'){
             resolve.data.Poster = 'noimage.jpg';
           }
           listAPI.adicionaWL($scope.serieTemp(resolve.data), $scope.watchedList);
-          ServiceRest.addMinhasSeries($scope.serieTemp(resolve.data));
+          ServiceRest.addMinhasSeries($scope.serieTemp(resolve.data), $scope.usuario.id);
           $scope.showWatchedList = listAPI.chunk($scope.watchedList, 5);
           $scope.adicionou = true;
         }else{

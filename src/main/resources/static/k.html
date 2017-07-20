@@ -3,8 +3,8 @@
             <h1>Séries Assistidas</h1>
               <!--caso já tenha adicionado alguma série-->
               <div ng-if="watchedList.length > 0">
-                <div class="row" ng-repeat="x in showWatchedList" ng-init="childrem=$index">
-                  <div ng-repeat="promise in x" ng-init="parent=$index">
+                <div class="row fade in active" ng-repeat="x in showWatchedList" ng-init="childrem=$index">
+                  <div class="fade in active" ng-repeat="promise in x" ng-init="parent=$index">
                     <img class="thumbnail grow" src="{{promise.Poster}}" width="150px" height="150px" data-toggle="modal" data-target="#miModal{{childrem + 5 * parent}}"></img>
                     <div id="miModal{{childrem + 5 * parent}}" class="modal fade">
                       <div class="modal-dialog">
@@ -25,11 +25,8 @@
                                 <button class="btn btn-primary" type="button" ng-click="adicionarNota(promise,nota)">Enviar</button>
                               </div>
                               <div class="thumbnail" style="width: 250px; height: 110px;">
-                                <select class="form-control" ng-model="temporada" style="width:230px" ng-options="temp.num for temp in promise.temporadas">
-                                    <option value="">Temporadas</option>
-                                </select>
                                 <input class="form-control" type="button reset" ng-model="episodio"  placeholder="Episódio assistido" style="width:230px" onfocus="this.value='';" />
-                                <button class="btn btn-primary" type="button" name="button" ng-click="temporada.episodios.push(episodio)">Adicionar Episódio</button>
+                                <button class="btn btn-primary" type="button" name="button" ng-click="addUltimoEp(episodio)">Adicionar Episódio</button>
                               </div>
                               <div class="thumbnail" style="width: 250px; height: 210px; margin-top: 5px">
                                 <div class="col-md-1">

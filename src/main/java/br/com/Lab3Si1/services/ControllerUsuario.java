@@ -89,7 +89,7 @@ public class ControllerUsuario {
 	}
 
 	@CrossOrigin
-	@RequestMapping(value = "/{id}/watched", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/{id}/watched", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Serie> adicionarSerie(@RequestBody Serie serie, @PathVariable("id") Long id) {
 		Usuario usu = clienteservice.buscarUsuario(id);
 		serieService.adicionarSerie(serie);
@@ -117,6 +117,7 @@ public class ControllerUsuario {
 	@RequestMapping(value="/{id}/minhasseries", method=RequestMethod.GET)
 	public ResponseEntity<List<Serie>> getMinhasSeries(@PathVariable Long id){
 		Usuario usu = clienteservice.buscarUsuario(id);
+		System.out.println(usu);
 		return new ResponseEntity<>(usu.getMinhasSeries(), HttpStatus.ACCEPTED);
 	}
 	
@@ -127,9 +128,9 @@ public class ControllerUsuario {
 		return new ResponseEntity<>(usu.getWatchList(), HttpStatus.ACCEPTED);
 	}
 	
-	@CrossOrigin
-	@RequestMapping(value="/email", method=RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public Usuario getEmails(@RequestBody Usuario user) {
+	/*@CrossOrigin
+	@RequestMapping(value="/email", method=RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE)*/
+	public Usuario getEmails(Usuario user) {
 		List<Usuario> l = clienteservice.getUsuarioBy("EMAIL",user.getEmail());
 		if(l.isEmpty())
 			return null;
