@@ -140,8 +140,8 @@ public class ControllerUsuario {
 		return new ResponseEntity<>(usu.getWatchList(), HttpStatus.ACCEPTED);
 	}
 	
-	/*@CrossOrigin
-	@RequestMapping(value="/email", method=RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE)*/
+	@CrossOrigin
+	@RequestMapping(value="/email", method=RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public Usuario getEmails(Usuario user) {
 		List<Usuario> l;
 		Usuario usu = null;
