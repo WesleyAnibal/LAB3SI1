@@ -1,5 +1,7 @@
 package br.com.Lab3Si1.services;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -48,12 +50,17 @@ public class UsuarioService {
 		usuariorepositorio.save(usuario);
 	}
 	
-	public List<Usuario> getUsuarioBy(String by,String search) {
+	public List<Usuario> getUsuarioBy(String by,String search) throws URISyntaxException {
 		String sql = "SELECT * FROM TB_USUARIO WHERE "+by+" = ?";
 		List<Usuario> usuarios = new ArrayList<>();
 		
 		try {
-			Connection connection = DriverManager.getConnection("jdbc:h2:file:~/h2/app_db", "sa", "");
+			
+			URI dburi = new URI(System.getenv("DATABASE_URL"));
+			String username = dburi.getUserInfo().split(":")[0];
+			String password = dburi.getUserInfo().split(":")[1];
+			String dbUrl = "jdbc:postgresql://" + dburi.getHost() +":"+dburi.getPort() +dburi.getPath();
+			Connection connection = DriverManager.getConnection(dbUrl, username, password);
 			
 			PreparedStatement stmt = connection.prepareStatement(sql);
 			stmt.setString(1, search);

@@ -1,5 +1,6 @@
 package br.com.Lab3Si1.services;
 
+import java.net.URISyntaxException;
 import java.util.List;
 
 import org.eclipse.jetty.client.ResponseNotifier;
@@ -142,20 +143,37 @@ public class ControllerUsuario {
 	/*@CrossOrigin
 	@RequestMapping(value="/email", method=RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE)*/
 	public Usuario getEmails(Usuario user) {
-		List<Usuario> l = clienteservice.getUsuarioBy("EMAIL",user.getEmail());
-		if(l.isEmpty())
-			return null;
-		Usuario usu = clienteservice.buscarUsuario(l.get(0).getId());
+		List<Usuario> l;
+		Usuario usu = null;
+		try {
+			l = clienteservice.getUsuarioBy("EMAIL",user.getEmail());
+			if(l.isEmpty())
+				return null;
+			usu = clienteservice.buscarUsuario(l.get(0).getId());
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 
 		return usu;
 	}
 	
 	@CrossOrigin
 	@RequestMapping(value="/name", method=RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Usuario> getNames(@RequestBody Usuario user) {
-		List<Usuario> l = clienteservice.getUsuarioBy("NOME",user.getNome());
-		if(l.isEmpty())
-			return new ResponseEntity<Usuario>(HttpStatus.NOT_FOUND);
-		Usuario usu = clienteservice.buscarUsuario(l.get(0).getId());
+		List<Usuario> l;
+		Usuario usu = null;
+		try {
+			l = clienteservice.getUsuarioBy("NOME",user.getNome());
+			if(l.isEmpty())
+				return new ResponseEntity<Usuario>(HttpStatus.NOT_FOUND);
+			 usu = clienteservice.buscarUsuario(l.get(0).getId());
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 		return new ResponseEntity<>(usu, HttpStatus.ACCEPTED);
 	}
 
