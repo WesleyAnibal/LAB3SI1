@@ -146,7 +146,7 @@ public class ControllerUsuario {
 		List<Usuario> l;
 		Usuario usu = null;
 		try {
-			l = clienteservice.getUsuarioBy("EMAIL",user.getEmail());
+			l = clienteservice.getUsuarioBy("email",user.getEmail());
 			if(l.isEmpty())
 				return null;
 			usu = clienteservice.buscarUsuario(l.get(0).getId());
