@@ -68,10 +68,10 @@ public class UsuarioService {
 			ResultSet executeQuery = stmt.executeQuery();
 			
 			while (executeQuery.next()) {
-				Long id = executeQuery.getLong("ID");
-				String nome = executeQuery.getString("NOME");
-				String senha = executeQuery.getString("SENHA");
-				String email = executeQuery.getString("EMAIL");
+				Long id = executeQuery.getLong("id");
+				String nome = executeQuery.getString("nome");
+				String senha = executeQuery.getString("senha");
+				String email = executeQuery.getString("email");
 				Usuario u = new Usuario(nome, email, senha);
 				u.setId(id);
 				usuarios.add(u);
