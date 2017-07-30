@@ -3,7 +3,7 @@ angular.module("series").service("ServiceRest" , function($http,$state){
 	
 	
 	var _usuarioRegistro = function(usuario){
-		var promise = $http.post("http://localhost:8080/#!/api/cadastro",usuario);
+		var promise = $http.post("https://seriesi.herokuapp.com/#!/api/cadastro",usuario);
 		promise.then(function(as){
 			this.user = as.data;
 			$state.transitionTo("series");
@@ -14,7 +14,7 @@ angular.module("series").service("ServiceRest" , function($http,$state){
 	var _getUser = function(usera){
 		console.log(usera);
 		user = {};
-		var promise = $http.post("http://localhost:8080/#!/api/busca", usera);
+		var promise = $http.post("https://seriesi.herokuapp.com/#!/api/busca", usera);
 		promise.then(function(as){
 			this.user = as.data;
 			$state.transitionTo("series");
@@ -24,7 +24,7 @@ angular.module("series").service("ServiceRest" , function($http,$state){
 	}
 	
 	var _adicionarMinhasSeries = function(serie, id){
-		var promise = $http.post("http://localhost:8080/#!/api/"+id+"/watched",serie);
+		var promise = $http.post("https://seriesi.herokuapp.com/#!/api/"+id+"/watched",serie);
 		promise.then(function(as){
 			this.user.minhasSeries.add(as.data);
 		});
@@ -32,7 +32,7 @@ angular.module("series").service("ServiceRest" , function($http,$state){
 	}
 	
 	var _adicionarWatchList = function(serie, id){
-		var promise = $http.post("http://localhost:8080/#!/api/"+id+"/watch",serie);
+		var promise = $http.post("https://seriesi.herokuapp.com/#!/api/"+id+"/watch",serie);
 		promise.then(function(as){
 			this.user.watchList.add(as.data);
 		});
@@ -40,7 +40,7 @@ angular.module("series").service("ServiceRest" , function($http,$state){
 	}
 	
 	var _removeWatched = function(id, i){
-		var promise = $http.delete("http://localhost:8080/#!/api/"+id+"/minhasseries/"+i);
+		var promise = $http.delete("https://seriesi.herokuapp.com/#!/api/"+id+"/minhasseries/"+i);
 		promise.then(function(as){
 			return as.data;
 		});
@@ -50,12 +50,12 @@ angular.module("series").service("ServiceRest" , function($http,$state){
 	}
 
 	var _getSeries = function(){
-			var promise = $http.get("http://localhost:8080/#!/api/"+usuario.data.id+"/minhasseries");
+			var promise = $http.get("https://seriesi.herokuapp.com/#!/api/"+usuario.data.id+"/minhasseries");
 			return promise;
 	}
 	
 	var _addNota = function(id, i, nota){
-		var promise = $http.put("http://localhost:8080/#!/api/"+id+"/minhasseries/"+i, nota);
+		var promise = $http.put("https://seriesi.herokuapp.com/#!/api/"+id+"/minhasseries/"+i, nota);
 		return promise;
 	}
 	
