@@ -26,7 +26,7 @@ public class ControllerUsuario {
 	SerieService serieService;
 	
 	@CrossOrigin
-	@RequestMapping(value="/busca",method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="/busca",method = {RequestMethod.GET, RequestMethod.POST}, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Usuario> buscaUsuario(@RequestBody Usuario usuario) {
 		
 		Usuario usu = this.getEmails(usuario);
@@ -54,7 +54,7 @@ public class ControllerUsuario {
 	}
 	
 	@CrossOrigin
-	@RequestMapping(value="/cadastro" , method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="/cadastro" , method = {RequestMethod.GET,RequestMethod.POST}, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Usuario> cadastrar(@RequestBody Usuario usuario) {
 		System.out.println(usuario.getId());
 		if(this.getEmails(usuario) != null)
