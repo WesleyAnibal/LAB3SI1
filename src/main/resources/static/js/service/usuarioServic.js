@@ -3,7 +3,7 @@ angular.module("series").service("ServiceRest" , function($http,$state){
 	
 	
 	var _usuarioRegistro = function(usuario){
-		var promise = $http.post("/#!/api/cadastro",usuario);
+		var promise = $http.post("/api/cadastro",usuario);
 		promise.then(function(as){
 			this.user = as.data;
 			$state.transitionTo("series");
