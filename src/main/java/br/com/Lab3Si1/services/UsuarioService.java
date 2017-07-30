@@ -51,7 +51,7 @@ public class UsuarioService {
 	}
 	
 	public List<Usuario> getUsuarioBy(String by,String search) throws URISyntaxException {
-		String sql = "SELECT * FROM TB_USUARIO WHERE "+by+" = ?";
+		String sql = "SELECT * FROM tb_usuario WHERE "+by+" = ?";
 		List<Usuario> usuarios = new ArrayList<>();
 		
 		try {
